@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\parse">
+      <UniqueIdentifier>{c277b2b2-4b4a-4bd3-afb9-45583b08e502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\assert">
+      <UniqueIdentifier>{54597933-3ff8-4c9f-80f9-8398506a0a71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utility">
+      <UniqueIdentifier>{f68dbddb-eb68-43e2-a69a-656db085fcc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\extension">
+      <UniqueIdentifier>{97b98233-a8dc-4f44-8e5f-130887a00b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\codec">
+      <UniqueIdentifier>{638e049e-766d-4f9a-b3e5-22cc4d40e429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FP">
+      <UniqueIdentifier>{3f00dc82-8c27-4a63-9057-86f6ab31a06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\TMP">
+      <UniqueIdentifier>{4151c26c-f894-42ab-be94-394383bdbb4a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="parse\tinyxml2.hpp">
+      <Filter>Header Files\parse</Filter>
+    </ClInclude>
+    <ClInclude Include="parse\tinyxml2_ex.hpp">
+      <Filter>Header Files\parse</Filter>
+    </ClInclude>
+    <ClInclude Include="roco_ns.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="assert\assert_any.hpp">
+      <Filter>Header Files\assert</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\path.hpp">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="extension\sstream.hpp">
+      <Filter>Header Files\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="parse\nlohmann_json.hpp">
+      <Filter>Header Files\parse</Filter>
+    </ClInclude>
+    <ClInclude Include="parse\json11.hpp">
+      <Filter>Header Files\parse</Filter>
+    </ClInclude>
+    <ClInclude Include="codec\gbk_utf8.hpp">
+      <Filter>Header Files\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="codec\code_converter.hpp">
+      <Filter>Header Files\codec</Filter>
+    </ClInclude>
+    <ClInclude Include="extension\raw_array.hpp">
+      <Filter>Header Files\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="extension\string.hpp">
+      <Filter>Header Files\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="extension\container.hpp">
+      <Filter>Header Files\extension</Filter>
+    </ClInclude>
+    <ClInclude Include="FP\memoized.hpp">
+      <Filter>Header Files\FP</Filter>
+    </ClInclude>
+    <ClInclude Include="FP\fluent_pipe.hpp">
+      <Filter>Header Files\FP</Filter>
+    </ClInclude>
+    <ClInclude Include="TMP\type_traits.hpp">
+      <Filter>Header Files\TMP</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\expected.hpp">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="utility\hash.hpp">
+      <Filter>Header Files\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="FP\curried.hpp">
+      <Filter>Header Files\FP</Filter>
+    </ClInclude>
+    <ClInclude Include="TMP\quantity.hpp">
+      <Filter>Header Files\TMP</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
