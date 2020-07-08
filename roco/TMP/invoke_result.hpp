@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _ROCO_TMP_TYPE_TRAITS_HPP_
-#define _ROCO_TMP_TYPE_TRAITS_HPP_
+#ifndef _ROCO_TMP_INVOKE_RESULT_HPP_
+#define _ROCO_TMP_INVOKE_RESULT_HPP_
 
 #include "../roco_ns.h"
 #include <type_traits>
@@ -155,4 +155,4 @@ struct invoke_result : detail::invoke_result<void, F, ArgTypes...> {};
 
 _ROCO_END
 
-#endif // _ROCO_TMP_TYPE_TRAITS_HPP_
+#endif // _ROCO_TMP_INVOKE_RESULT_HPP_
