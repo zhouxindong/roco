@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <type_traits>
 
 #include "../TMP/easy_bind.hpp"
 #include "guid.hpp"
@@ -20,10 +21,9 @@ _ROCO_BEGIN
 template <typename _Signature>
 class Easy_signal;
 
-// forward declare
-template <typename _Ret, typename ..._Args>
-class Easy_signal<_Ret(_Args...)>;
-
+/**
+ * Easy_connect
+ */
 template <typename _Signature>
 class Easy_connect;
 
@@ -66,16 +66,6 @@ public:
 		return id_;
 	}
 
-	void set_connected(bool connected)
-	{
-		connected_ = connected;
-	}
-
-	bool connected() const
-	{
-		return connected_;
-	}
-
 public:
 	void disconnect()
 	{
@@ -83,6 +73,14 @@ public:
 			return;
 		signal_.get().disconnect(id_);
 		connected_ = false;
+	}
+
+	void reconnect()
+	{
+		if (connected_)
+			return;
+		signal_.get().connect(*this);
+		connected_ = true;
 	}
 
 private:
@@ -154,21 +152,23 @@ public:
 		return conn;
 	}
 
+private:
 	/**
 	 * connect class member function to signal
 	 */
 	template <typename _Ret2, typename _Class, std::size_t... Is>
-	Easy_connect<_Ret(_Args...)> connect(_Ret2 _Class::* pmf, _Class& obj, detail::indices<Is...>)
+	Easy_connect<_Ret(_Args...)> connect_pmf(_Ret2 _Class::* pmf, _Class& obj, detail::indices<Is...>)
 	{
 		auto conn = Easy_connect<_Ret(_Args...)>(std::bind(pmf, obj, placeholder<Is + 1>{}...), *this);
 		slots_.push_back(conn);
 		return conn;
 	}
 
+public:
 	template <typename _Ret2, typename _Class>
 	Easy_connect<_Ret(_Args...)> connect(_Ret2 _Class::* pmf, _Class& obj)
 	{
-		return connect(pmf, obj, detail::build_indices<sizeof...(_Args)>{});
+		return connect_pmf(pmf, obj, detail::build_indices<sizeof...(_Args)>{});
 	}
 
 	/**
@@ -176,19 +176,62 @@ public:
 	 */
 	void connect(const Easy_signal& rhs)
 	{
-		signals_.push_back(rhs);
+		signals_.push_back(std::ref(rhs));
+	}
+
+	void connect(Easy_signal& rhs)
+	{
+		signals_.push_back(std::ref(rhs));
+	}
+
+	void connect(Easy_connect<_Ret(_Args...)> const& conn)
+	{
+		slots_.push_back(conn);
+	}
+
+	void connect(Easy_connect<_Ret(_Args...)>& conn)
+	{
+		slots_.push_back(conn);
 	}
 
 	/**
 	 * emit signal
 	 */
-	void operator()(_Args&&... args) const
+	template <typename ..._Call_args>
+	void operator()(_Call_args&&... args) const
 	{
 		std::for_each(slots_.cbegin(), slots_.cend(), [&](const Easy_connect<_Ret(_Args...)>& f)
 			{
 				//if (f.connected())
-					f(std::forward<_Args>(args)...);
+					f(std::forward<_Call_args>(args)...);
 			});
+
+		std::for_each(signals_.cbegin(), signals_.cend(), [&](auto sig) {
+			sig.get()(std::forward<_Call_args>(args)...);
+			});
+	}
+
+	template <typename ..._Call_args>
+	void emit(_Call_args&&... args) const
+	{
+		operator()(std::forward<_Call_args>(args)...);
+	}
+
+	template <typename _Cb, typename ..._Call_args>
+	auto emit_result_back(_Cb&& cb, _Call_args&&... args) const
+	{
+		std::vector<_Ret> v;
+		std::for_each(slots_.cbegin(), slots_.cend(), [&](const Easy_connect<_Ret(_Args...)>& f)
+			{
+				//if (f.connected())
+				v.push_back(f(std::forward<_Call_args>(args)...));
+			});
+
+		std::for_each(signals_.cbegin(), signals_.cend(), [&](auto sig) {
+			sig.get()(std::forward<_Call_args>(args)...);
+			});
+
+		return std::forward<_Cb>(cb)(v);
 	}
 
 public:
